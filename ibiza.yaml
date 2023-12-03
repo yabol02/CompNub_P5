@@ -1,0 +1,73 @@
+# Universidad Politécnica de Madrid - Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación
+# Grado en Ingeniería y Sistemas de Datos - Computación en la Nube - P5
+# Archivo de manifiesto para el barrio Ibiza
+
+# Definición del espacio de nombres que simulará el clúster de Ibiza
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ibiza-p5
+
+---
+
+# Definición del despliegue para gestionar los PODs
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-pushgateway-ibiza
+  namespace: ibiza-p5
+  labels:
+    name: p5
+    rol: deployment
+    barrio: ibiza
+spec:
+  progressDeadlineSeconds: 30
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 25%
+  replicas: 3
+  selector:
+    matchLabels:
+      barrio: ibiza
+      rol: pod
+  template:
+    metadata:
+      labels:
+        name: p5
+        barrio: ibiza
+        rol: pod
+      annotations:
+        kubernetes.io/description: "Instancia de PushGateway para la P5"
+        imagen: "transactcharlie/pushgateway:latest"
+        kubernetes.io/change-cause: "Primera versión del Deployment con 3 réplicas"
+    spec:
+      containers:
+      - name: pod-pushgateway-ibiza
+        image: "transactcharlie/pushgateway:latest"
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 9000
+
+---
+
+# Definición del servicio para comprobación del funcionamiento
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-ibiza
+  namespace: ibiza-p5
+spec:
+  type: NodePort
+  selector:
+    barrio: ibiza
+    rol: pod
+  ports:
+  - port: 12345
+    targetPort: 9091
+    nodePort: 30354
