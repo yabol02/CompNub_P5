@@ -1,0 +1,22 @@
+global:
+  # Establace con qué frecuencia Prometheus solicita métricas al origen de los datos
+  scrape_interval: 2s
+
+  # Etiquetas que se añadirán a las series temporales cuando haya una interacción con sistemas externos.
+  external_labels:
+    monitor: 'medioambiente_delicias'
+    app: 'prometheus.delicias-p5'
+
+# Fichero con las reglas que hay que ejecutar al recibir métricas de la fuente de datos. Es este caso, 
+# cálculo del valor medio de temperatura y humedad. Es este caso no se contempla aún la generación de alertas.
+rule_files:
+  - 'delicias.rules'
+scrape_configs:
+  - job_name: 'delicias'  # No es relevate ya que que honor_labels es true.
+    static_configs:
+      - targets: ['http://np-pushgateway-delicias.delicias-p5:30353']
+    # La opción honor_labels indica a Prometheus que no ha de modificar las etiquetas de origen de datos cuyos nombres coincidan
+    # con las que él genera automáticamente.
+    honor_labels: true
+    # La opción honor_timestamps indica a Prometheus que debe respetar los sellos de tiempos de las métricas que reciba.
+    honor_timestamps: true
