@@ -10,7 +10,7 @@ metadata:
 
 ---
 
-# Definición del despliegue para gestionar los PODs
+# Definición del despliegue para gestionar los PODs de PushGateway
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,6 +20,7 @@ metadata:
     name: p5
     rol: deployment
     barrio: ibiza
+    imagen: pushgateway
 spec:
   progressDeadlineSeconds: 30
   revisionHistoryLimit: 5
@@ -33,14 +34,16 @@ spec:
     matchLabels:
       barrio: ibiza
       rol: pod
+      imagen: pushgateway
   template:
     metadata:
       labels:
         name: p5
-        barrio: ibiza
         rol: pod
+        barrio: ibiza
+        imagen: pushgateway
       annotations:
-        kubernetes.io/description: "Instancia de PushGateway para la P5"
+        kubernetes.io/description: "Instancia de PushGateway para la fase 1 de la P5"
         imagen: "transactcharlie/pushgateway:latest"
         kubernetes.io/change-cause: "Primera versión del Deployment con 3 réplicas"
     spec:
@@ -56,17 +59,18 @@ spec:
 
 ---
 
-# Definición del servicio para comprobación del funcionamiento
+# Definición del servicio NodePort para conectar los pushgateway, sensores y el cliente web
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-ibiza
+  name: np-pushgateway-ibiza
   namespace: ibiza-p5
 spec:
   type: NodePort
   selector:
     barrio: ibiza
     rol: pod
+    imagen: pushgateway
   ports:
   - port: 12345
     targetPort: 9091

@@ -10,7 +10,7 @@ metadata:
 
 ---
 
-# Definición del despliegue para gestionar los Pods de PushGateway
+# Definición del despliegue para gestionar los PODs de PushGateway
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -1,0 +1,89 @@
+# Universidad Politécnica de Madrid - Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación
+# Grado en Ingeniería y Sistemas de Datos - Computación en la Nube - P5
+# Archivo de manifiesto para la fase 2 del barrio Ibiza
+
+# Definición del despliegue para gestionar los Pods de Prometheus
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-prometheus-ibiza
+  namespace: ibiza-p5
+  labels:
+    name: p5
+    rol: deployment
+    barrio: ibiza
+    imagen: prometheus
+spec:
+  progressDeadlineSeconds: 30
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      barrio: ibiza
+      rol: pod
+      imagen: prometheus
+  template:
+    metadata:
+      labels:
+        name: p5
+        rol: pod
+        barrio: ibiza
+        imagen: prometheus
+      annotations:
+        kubernetes.io/description: "Instancia de Prometheus para la fase 2 de la P5"
+        imagen: "prom/prometheus:latest"
+        kubernetes.io/change-cause: "Primera versión del Deployment de Prometheus"
+    spec:
+      volumes: 
+        - name: vol-ibiza
+          hostPath:
+            type: Directory
+            path: /config-ibiza
+      containers:
+      - name: pod-prometheus-ibiza
+        image: prom/prometheus:latest
+        args: ["--config.file=/etc/prom/config-prom-ibiza.yaml"]
+        volumeMounts:
+          - mountPath: /etc/prom
+            name: vol-ibiza
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 9000
+
+---
+
+# Definición del servicio NodePort para conectar los pushgateway, el prometheus y el cliente web
+apiVersion: v1
+kind: Service
+metadata:
+  name: np-prometheus-ibiza
+  namespace: ibiza-p5
+spec:
+  type: NodePort
+  selector:
+    barrio: ibiza
+    rol: pod
+    imagen: prometheus
+  ports:
+  - port: 12345
+    targetPort: 9090
+    nodePort: 31354
+
+---
+
+# ConfigMap de Prometheus
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-prometheus-ibiza
+  namespace: ibiza-p5
+data:
+  CONF_FILE: /etc/prometheus/conf/config-prom-ibiza.yml

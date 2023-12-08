@@ -1,0 +1,15 @@
+groups:
+  - name: temp_media
+    rules:
+    - record: temperatura_media     # Nombre de la métrica Prometheus con temperatura media.
+      expr: avg(temperatura)        # Expresión para el cálculo del valor medio de temperatura. 
+      labels:                       # Etiquetas a añadir a la métrica con la temperatura media.
+        job: ibiza
+        unidades: 'ºC'
+  - name: hum_media
+    rules:
+    - record: humedad_media         # Nombre de la métrica Prometheus con temperatura media.
+      expr: avg(humedad)            # Expresión para el cálculo del valor medio de humedad.
+      labels:                       # Etiquetas a añadir a la métrica con la humedad media.
+        job: ibiza
+        unidades: '%'
