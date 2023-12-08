@@ -14,7 +14,7 @@ rule_files:
 scrape_configs:
   - job_name: 'delicias'  # No es relevate ya que que honor_labels es true.
     static_configs:
-      - targets: ['http://np-pushgateway-delicias.delicias-p5:30353']
+      - targets: ['np-pushgateway-delicias.delicias-p5:30353']
     # La opción honor_labels indica a Prometheus que no ha de modificar las etiquetas de origen de datos cuyos nombres coincidan
     # con las que él genera automáticamente.
     honor_labels: true

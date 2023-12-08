@@ -75,7 +75,7 @@ spec:
   ports:
   - port: 12345
     targetPort: 9090
-    nodePort: 32353
+    nodePort: 31353
 
 ---
 
@@ -86,4 +86,4 @@ metadata:
   name: config-prometheus-delicias
   namespace: delicias-p5
 data:
-  CONF_FILE: /etc/prometheus/conf/prom.yml
+  CONF_FILE: /etc/prometheus/conf/config-prom-delicias.yml
