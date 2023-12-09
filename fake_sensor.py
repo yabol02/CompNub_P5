@@ -81,7 +81,7 @@ if __name__ == "__main__":
     
     while True:
         try:
-            medidor_temperatura.labels(nombre_sensor, longitud, latitud, 'centígrados').set(random.uniform(-50.0, 50.0))
+            medidor_temperatura.labels(nombre_sensor, longitud, latitud, 'ºC').set(random.uniform(-50.0, 50.0))
             medidor_humedad.labels(nombre_sensor, longitud, latitud, '%').set( random.uniform(0,100))
             push_to_gateway(pushGWIP+':'+str(pushGWPort), job=nombreJob, registry=registro)
             time.sleep(int(period))
