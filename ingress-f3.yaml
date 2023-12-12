@@ -21,7 +21,7 @@ spec:
           service:
             name: np-prometheus-delicias
             port: 
-              number: 20000
+              number: 12345
 
 ---
 
@@ -48,4 +48,4 @@ spec:
           service:
             name: np-prometheus-ibiza
             port:
-              number: 20000
+              number: 12345
