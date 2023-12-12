@@ -1,0 +1,12 @@
+version: '2'
+services:
+  grafana:
+    image: grafana/grafana
+    user: '0'
+    volumes:
+      - ./grafana_db:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=CompNub-P5-YAGO
+    depends_on:
+      - prometheus
+    network_mode: 'host'
