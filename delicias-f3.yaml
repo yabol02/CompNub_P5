@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-delicias
+  labels:
+    name: p5
+    rol: ingress
+    barrio: delicias
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: www.madrid.es
+    http:
+      paths:
+      - pathType: Prefix
+        path: '/delicias(/|$)(.*)'
+        backend:
+          service:
+            name: np-prometheus-delicias
+            port: 
+              number: 20000
