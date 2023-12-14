@@ -47,7 +47,10 @@ spec:
       containers:
       - name: pod-prometheus-ibiza
         image: prom/prometheus:latest
-        args: ["--config.file=/etc/prom/config-prom-ibiza.yaml"]
+        envFrom:
+          - configMapRef:
+              name: config-prometheus-ibiza
+        args: ["--config.file=$(CONF_FILE)"]
         volumeMounts:
           - mountPath: /etc/prom
             name: vol-ibiza
@@ -86,4 +89,4 @@ metadata:
   name: config-prometheus-ibiza
   namespace: ibiza-p5
 data:
-  CONF_FILE: /etc/prometheus/conf/config-prom-ibiza.yml
+  CONF_FILE: /etc/prom/config-prom-ibiza.yaml
