@@ -12,6 +12,6 @@ receivers:
   - name: telegram_receiver
     telegram_configs:
     - api_url: "https://api.telegram.org"
-      bot_token: '6926735084:AAFB2KsoR_-BIZhCjAPrknsTHM0zAI_pufk'
+      bot_token: '1234657890:XXXX0XxxX_-XXXxXxXXxxxxXXXXxXX_xxxx'
       chat_id: -4099219506
       send_resolved: false
