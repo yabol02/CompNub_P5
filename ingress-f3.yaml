@@ -49,3 +49,30 @@ spec:
             name: np-prometheus-ibiza
             port:
               number: 12345
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-madrid
+  namespace: madrid-p5
+  labels:
+    name: p5
+    rol: ingress
+    barrio: madrid
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: www.madrid.es
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /madrid(/|$)(.*)
+        backend:
+          service:
+            name: p-alertmanager
+            port:
+              number: 12345

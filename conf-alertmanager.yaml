@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 3m               # Tiempo máximo para resolver una alerta después de volver a un estado normal.
+
+route:
+  receiver: 'default-receiver'      # Enviar alertas al receptor llamado 'default-receiver'.
+  group_by: ['job', 'alerta']       # Agrupar alertas por las etiquetas 'job' y 'alerta'.
+  group_wait: 15s                   # Esperar 15 segundos para agrupar alertas del mismo grupo.
+  group_interval: 1m                # Agrupar alertas del mismo grupo en una única notificación cada 5 minutos.
+  repeat_interval: 4h               # Repetir notificaciones para un grupo de alertas cada 4 horas.
+
+receivers:
+- name: 'telegram-receiver'
+  telegram_configs:
+  - api_key: 'token_del_bot'
+    chat_id: 'chat_id'
