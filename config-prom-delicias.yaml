@@ -16,8 +16,8 @@ scrape_configs:
     honor_labels: true
     honor_timestamps: true
 
-
+# Generación de alertas
 alerting:
   alertmanagers:
     - static_configs:
-      - targets: ['np-alertmanager.madrid-p5:8888']
+      - targets: ['np-alertmanager.madrid-p5:12345']
