@@ -15,35 +15,35 @@ groups:
         job: ibiza
         unidades: '%'
 
-    - name: temp_alta
-      rules:
-      - record: temperatura_alta
-        expr: temp_media > 30
-        for: 1m
-        labels:
-          job: ibiza
-          alerta: temperatura
-        annotations:
-          summary: Temperatura alta demasiado tiempo
+  - name: temp_alta
+    rules:
+    - alert: temperatura_alta
+      expr: temperatura_media > 30
+      for: 1m
+      labels:
+        job: ibiza
+        alerta: temperatura
+      annotations:
+        summary: Temperatura alta demasiado tiempo
 
-    - name: temp_baja
-      rules:
-      - record: temperatura_baja
-        expr: temp_media < 0
-        for: 1m
-        labels:
-          job: ibiza
-          alerta: temperatura
-        annotations:
-          summary: Temperatura baja demasiado tiempo
+  - name: temp_baja
+    rules:
+    - alert: temperatura_baja
+      expr: temperatura_media < 0
+      for: 1m
+      labels:
+        job: ibiza
+        alerta: temperatura
+      annotations:
+        summary: Temperatura baja demasiado tiempo
 
-    - name: hum_baja
-      rules:
-      - record: humedad_baja
-        expr: humedad_media < 30
-        for: 30s
-        labels:
-          job: ibiza
-          alerta: humedad
-        annotations:
-          summary: Humedad baja demasiado tiempo
+  - name: hum_baja
+    rules:
+    - alert: humedad_baja
+      expr: humedad_media < 30
+      for: 30s
+      labels:
+        job: ibiza
+        alerta: humedad
+      annotations:
+        summary: Humedad baja demasiado tiempo
