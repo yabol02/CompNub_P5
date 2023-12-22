@@ -53,8 +53,6 @@ spec:
           limits:
             memory: "32Mi"
             cpu: "50m"
-        ports:
-        - containerPort: 8888
 
 ---
 
@@ -71,5 +69,5 @@ spec:
     imagen: alertmanager
   ports:
   - port: 12345
-    targetPort: 8888
+    targetPort: 9093
     nodePort: 32353
