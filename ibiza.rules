@@ -9,7 +9,7 @@ groups:
 
   - name: hum_media
     rules:
-    - record: humedad_mediay
+    - record: humedad_media
       expr: avg(humedad)
       labels:
         job: ibiza
@@ -28,7 +28,7 @@ groups:
 
     - name: temp_baja
       rules:
-      - record: temperatura_abaja
+      - record: temperatura_baja
         expr: temp_media < 0
         for: 1m
         labels:
@@ -39,7 +39,7 @@ groups:
 
     - name: hum_baja
       rules:
-      - record: humedad_abaja
+      - record: humedad_baja
         expr: humedad_media < 30
         for: 30s
         labels:
