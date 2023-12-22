@@ -73,6 +73,6 @@ spec:
         path: /madrid(/|$)(.*)
         backend:
           service:
-            name: p-alertmanager
+            name: np-alertmanager
             port:
               number: 12345
