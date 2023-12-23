@@ -42,13 +42,17 @@ spec:
         kubernetes.io/change-cause: "Primera versión del Deployment del AlertManager"
     spec:
       volumes: 
-        - name: vol-delicias
+        - name: vol-madrid
           hostPath:
             type: Directory
             path: /config-alertmanager
       containers:
       - name: pod-alertmanager
         image: prom/alertmanager
+        args: ["--config.file=/etc/prometheus/conf-alertmanager.yaml"]
+        volumeMounts:
+          - mountPath: /etc/prometheus
+            name: vol-madrid
         resources:
           limits:
             memory: "32Mi"
